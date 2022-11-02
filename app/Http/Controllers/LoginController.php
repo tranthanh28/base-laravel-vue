@@ -8,9 +8,20 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\UserRepositoryInterface;
 
 class LoginController extends Controller
 {
+    /**
+     * @var UserRepositoryInterface
+     */
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function login(Request $request): JsonResponse
     {
 
@@ -36,7 +47,7 @@ class LoginController extends Controller
                 ], 401);
             }
 
-            $user = User::where('email', $request->email)->first();
+            $user = $this->userRepository->firstByWhere(['email' => $request->email]);
 
             return response()->json([
                 'status' => true,
@@ -50,7 +61,6 @@ class LoginController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-
     }
 
     public function logout(Request $request): JsonResponse

@@ -14,28 +14,21 @@
                 <el-menu-item index="2">
                     <router-link to='/about'>About</router-link>
                 </el-menu-item>
-                <el-menu-item index="3">
-                    <router-link class="mr-4" to='/login' exact>Login</router-link>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <router-link to='/register'>Register</router-link>
-                </el-menu-item>
-                <ul class="navbar-nav ms-auto">
-                    <!-- Authenticated -->
-                    <li v-if="user" class="nav-item dropdown">
-                        <div class="dropdown-menu">
-                            <router-link :to="{ name: 'settings.profile' }" class="dropdown-item ps-3">
-                                Settings
-                            </router-link>
-
-                            <div class="dropdown-divider"/>
-                            <a href="#" class="dropdown-item ps-3" @click.prevent="logout">
-                                logout
-                            </a>
-                        </div>
-                    </li>
-                    <!-- Guest -->
-                </ul>
+                <el-submenu class="float-end" v-if="user" index="3">
+                    <template slot="title">{{ user.name }}</template>
+                    <el-menu-item index="3-1">
+                        <router-link to="/settings" exact>Setting te</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="3-2" @click="logout">Logout</el-menu-item>
+                </el-submenu>
+                <template v-else>
+                    <el-menu-item class="float-end" index="4">
+                        <router-link class="mr-4" to='/login' exact>Login</router-link>
+                    </el-menu-item>
+                    <el-menu-item class="float-end" index="5">
+                        <router-link to='/register'>Register</router-link>
+                    </el-menu-item>
+                </template>
             </el-menu>
         </div>
         <div class="container mx-auto py-2">
@@ -45,7 +38,6 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
-import {computed} from "vue";
 
 export default {
     name: 'app',
@@ -55,22 +47,10 @@ export default {
             token: localStorage.getItem('token'),
         }
     },
-    created() {
-        if (this.token) {
-            this.getUser()
-        }
-    },
     computed: mapGetters({
         user: 'auth/user'
     }),
     methods: {
-        getUser() {
-            axios.get('api/user').then((response) => {
-                this.user = response.data
-            }).catch((errors) => {
-                console.log(errors)
-            })
-        },
         logout() {
             axios.post('api/logout').then(() => {
                 localStorage.removeItem('token')
