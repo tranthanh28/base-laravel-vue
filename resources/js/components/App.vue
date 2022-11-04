@@ -1,65 +1,47 @@
 <template>
-    <div>
-        <div>
-            <el-menu
-                :default-active="defaultActive"
-                class="el-menu-demo"
-                mode="horizontal"
-                background-color="#545c64"
-                text-color="#fff"
-                active-text-color="#ffd04b">
-                <el-menu-item index="1">
-                    <router-link class="mr-4" to='/' exact>Home</router-link>
-                </el-menu-item>
-                <el-menu-item index="2">
-                    <router-link to='/about'>About</router-link>
-                </el-menu-item>
-                <el-submenu class="float-end" v-if="user" index="3">
-                    <template slot="title">{{ user.name }}</template>
-                    <el-menu-item index="3-1">
-                        <router-link to="/settings" exact>Setting te</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="3-2" @click="logout">Logout</el-menu-item>
-                </el-submenu>
-                <template v-else>
-                    <el-menu-item class="float-end" index="4">
-                        <router-link class="mr-4" to='/login' exact>Login</router-link>
-                    </el-menu-item>
-                    <el-menu-item class="float-end" index="5">
-                        <router-link to='/register'>Register</router-link>
-                    </el-menu-item>
-                </template>
-            </el-menu>
-        </div>
-        <div class="container mx-auto py-2">
-            <router-view></router-view>
-        </div>
-    </div>
+    <component :is="layout">
+        <router-view/>
+    </component>
 </template>
-<script>
-import {mapGetters} from 'vuex'
 
+<script>
+import AuthLayout from "../layouts/AuthLayout"
+import DefaultLayout from "../layouts/DefaultLayout"
+const default_layout = "DefaultLayout"
 export default {
-    name: 'app',
+    name: `App`,
+    components: {
+        AuthLayout,
+        DefaultLayout,
+    },
     data() {
         return {
-            defaultActive: "1",
-            token: localStorage.getItem('token'),
+        };
+    },
+    computed: {
+        layout() {
+            return (this.$route.meta.layout || default_layout);
         }
     },
-    computed: mapGetters({
-        user: 'auth/user'
-    }),
-    methods: {
-        logout() {
-            axios.post('api/logout').then(() => {
-                localStorage.removeItem('token')
-                this.$store.dispatch('auth/logout')
-                this.$router.push('/login')
-            }).catch((errors) => {
-                console.log(errors)
-            })
-        },
+};
+</script>
+
+<style lang="scss">
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    line-height: 1.6;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+p {
+    &:not(:first-child) {
+        margin-top: 1.25em;
     }
 }
-</script>
+</style>

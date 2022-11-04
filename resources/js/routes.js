@@ -21,45 +21,73 @@ export default {
             path: '/',
             component: Home,
             name: "Home",
-            meta: { requiresAuth: true }
+            meta: {
+                requiresAuth: true,
+                layout: 'AuthLayout',
+            }
         },
         {
             path: '/about',
             component: About,
-            meta: { guest: true }
+            meta: {
+                guest: true,
+                layout: 'DefaultLayout',
+            },
+            name: 'About',
         },
         {
             path: '/register',
             component: Register,
-            meta: { guest: true },
+            meta: {
+                guest: true,
+                layout: 'DefaultLayout',
+            },
+            name: 'Register'
         },
         {
             path: '/login',
             component: Login,
-            meta: { guest: true },
+            meta: {
+                guest: true,
+                layout: 'DefaultLayout',
+            },
             name: 'Login',
         },
         {
             path: "/dashboard",
             name: "Dashboard",
             component: Dashboard,
-            meta: { requiresAuth: true },
+            meta: {
+                requiresAuth: true,
+                layout: 'AuthLayout',
+            },
         },
         {
             path: "/settings",
             component: Settings,
-            meta: { requiresAuth: true },
+            meta: {
+                requiresAuth: true,
+                layout: 'AuthLayout',
+            },
             children: [
-                { path: '', redirect: { name: 'settings.profile' } },
+                {path: '', redirect: {name: 'settings.profile'}},
                 {
                     path: "profile",
                     name: "settings.profile",
                     component: Profile,
+                    meta: {
+                        requiresAuth: true,
+                        layout: 'AuthLayout',
+                    },
                 },
                 {
                     path: "password",
                     name: "settings.password",
                     component: Password,
+                    meta: {
+                        requiresAuth: true,
+                        layout: 'AuthLayout',
+                    },
                 }
             ]
         }

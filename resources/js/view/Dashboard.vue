@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         Dashboard <br>
         <div v-if="user">
             Name: {{ user.name }} <br>
@@ -30,7 +30,7 @@ export default {
         getUser() {
             axios.get('api/user').then((response) => {
                 this.user = response.data
-                this.$store.dispatch('auth/updateUser', { user: this.user })
+                this.$store.dispatch('auth/updateUser', {user: this.user})
             }).catch((errors) => {
                 this.$router.push('/login')
                 console.log(errors)

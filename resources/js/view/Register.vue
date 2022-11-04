@@ -22,6 +22,7 @@
     </div>
 </template>
 <script>
+
 export default {
     data() {
         var validatePass = (rule, value, callback) => {

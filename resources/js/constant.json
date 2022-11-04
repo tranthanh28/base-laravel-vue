@@ -1,0 +1,203 @@
+{
+    "leftMenu": {
+        "default": [
+            {
+                "route": "#",
+                "title": "Quản lý URL",
+                "child": [
+                    {
+                        "route": "/home",
+                        "title": "Danh sách URL",
+                        "index": "1-1"
+                    },
+                    {
+                        "route": "/home1",
+                        "title": "Thêm thủ công",
+                        "index": "1-2"
+
+                    },
+                    {
+                        "route": "/home2",
+                        "title": "Dò tự động",
+                        "index": "1-3"
+                    },
+                    {
+                        "route": "/home3",
+                        "title": "Log các lần quét",
+                        "index": "1-4"
+                    }
+                ],
+                "icon": "el-icon-link",
+                "index": "1"
+            },
+            {
+                "route": "home5",
+                "title": "Crawler Quanlity",
+                "child": [
+                {
+                    "route": "/home/test1",
+                    "title": "creawler 1",
+                    "index": "2-1"
+                },
+                {
+                    "route": "/home/3",
+                    "title": "crawler 2",
+                    "index":  "2-2"
+                }
+                ],
+                "icon": "el-icon-link",
+                "index": "2"
+            } ,
+            {
+                "route": "/path",
+                "title": "xPATH",
+                "child": [
+                    {
+                        "route": "/path/1",
+                        "title": "Danh sách",
+                        "index": "3-1"
+                    },
+                    {
+                        "route": "/path/2",
+                        "title": "Thêm mới",
+                        "index":  "3-2"
+                    },
+                    {
+                        "route": "/path/3",
+                        "title": "Kiểm tra Xpath",
+                        "index":  "3-3"
+                    }
+                ],
+                "icon": "el-icon-box",
+                "index": "3"
+            },
+            {
+                "route": "/tools",
+                "title": "Tools",
+                "child": [
+                    {
+                        "route": "/tool/1",
+                        "title": "Facebook Interactive",
+                        "index": "4-1"
+                    },
+                    {
+                        "route": "/tool/2",
+                        "title": "Google Custom Search",
+                        "index":  "4-2"
+                    }
+                ],
+                "icon": "el-icon-box",
+                "index": "4"
+            },
+            {
+                "route": "/tokens-kin",
+                "title": "Token Group Kín",
+                "child": [
+                    {
+                        "route": "/home",
+                        "title": "Danh sách Token",
+                        "index": "5-1"
+                    },
+                    {
+                        "route": "/home",
+                        "title": "Thêm thủ công",
+                        "index":  "5-2"
+                    }
+                ],
+                "icon": "el-icon-box",
+                "index": "5"
+            },
+            {
+                "route": "/group-private",
+                "title": "Group Private",
+                "child": [],
+                "icon": "el-icon-box",
+                "index": "6"
+            },
+            {
+                "route": "/facebook-page",
+                "title": "Facebook Page",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "7"
+            },
+            {
+                "route": "/bao-cao-tu-dong",
+                "title": "Báo cáo tự động",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "8"
+            },
+            {
+                "route": "/bao-cao-thu-cong",
+                "title": "Báo cáo thủ công,",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "9"
+            },
+            {
+                "route": "/bao-cao-duoc-pham",
+                "title": "Báo cáo dược phẩm",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "10"
+            },
+            {
+                "route": "/huyndai-site",
+                "title": "Huyndai Site",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "11"
+            },
+            {
+                "route": "/page-group-chinh",
+                "title": "Page Group Chính",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "12"
+            },
+            {
+                "route": "/export-data",
+                "title": "Export Data",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "13"
+            },
+            {
+                "route": "/export-template",
+                "title": "Export Template",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "14"
+            },
+            {
+                "route": "/export-post-fanpage",
+                "title": "Export Post Fanpage",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "15"
+            },
+            {
+                "route": "export-campaigns",
+                "title": "Export Campaigns",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "16"
+            },
+            {
+                "route": "/alert-custom",
+                "title": "Alert Custom",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "17"
+            },
+            {
+                "route": "import-group",
+                "title": "Import Group FB",
+                "child": [],
+                "icon": "el-icon-link",
+                "index": "18"
+            }
+        ]
+    }
+}
