@@ -42,25 +42,20 @@ class StoreWeb extends Command
      */
     public function handle()
     {
-        $data = [
-            'index' => 'website',
-            'type' => 'filtered',
-            'id' => 1,
-            'body' => [
-                'es_id' => 'id_2',
-                'is_updated' => 123123,
-                'status_5' => 1,
-                'sub_brand_service_id' => 123,
-                'sub_parent_service_id' => 123,
-                'tv_sub_brand_service_id' => 123,
-                'web_brand_id' => 123,
-                'web_brand_service_id' => 321,
-            ],
-        ];
         try {
-            $this->elasticsearch->index($data);
+            $dataFile = file_get_contents(resource_path('data/data.json'));
+            $dataFile = json_decode($dataFile, true);
+            foreach ($dataFile['hits']['hits'] as $item) {
+                $data = [
+                    'index' => $item['_index'],
+                    'type' => $item['_type'],
+                    'body' => $item['_source'],
+                ];
+                $this->elasticsearch->index($data);
+            }
         } catch (\Exception $e) {
-            $this->info( $e->getMessage());
+            $this->info($e->getMessage());
+            return false;
         }
         $this->info('Store Successfully');
     }
