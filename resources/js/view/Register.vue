@@ -1,24 +1,25 @@
 <template>
-    <div>
-        <h1>Register an account</h1>
-
-        <el-form ref="form" :model="form" :rules="rules" label-width="180px">
-            <el-form-item prop="name" label="Name">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item prop="email" label="Your e-mail">
-                <el-input v-model="form.email"></el-input>
-            </el-form-item>
-            <el-form-item prop="password" label="Password">
-                <el-input type="password" v-model="form.password"></el-input>
-            </el-form-item>
-            <el-form-item prop="password_confirmation" label="Confirm password">
-                <el-input type="password" v-model="form.password_confirmation"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="saveForm">Register</el-button>
-            </el-form-item>
-        </el-form>
+    <div class="register">
+        <el-card class="box-card">
+            <h2>Register an account</h2>
+            <el-form ref="form" class="register-form" :model="form" :rules="rules" label-width="180px">
+                <el-form-item prop="name" label="Name">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item prop="email" label="Your e-mail">
+                    <el-input v-model="form.email"></el-input>
+                </el-form-item>
+                <el-form-item prop="password" label="Password">
+                    <el-input type="password" v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item prop="password_confirmation" label="Confirm password">
+                    <el-input type="password" v-model="form.password_confirmation"></el-input>
+                </el-form-item>
+                <div class="d-flex justify-content-center">
+                    <el-button type="primary" @click="saveForm">Register</el-button>
+                </div>
+            </el-form>
+        </el-card>
     </div>
 </template>
 <script>
@@ -56,7 +57,7 @@ export default {
                 ],
                 password: [
                     {required: true, message: 'Please input password', trigger: 'blur'},
-                    { min: 6, max: 20, message: 'Length should be 6 to 20', trigger: 'blur' }
+                    {min: 6, max: 20, message: 'Length should be 6 to 20', trigger: 'blur'}
                 ],
                 password_confirmation: [
                     {validator: validatePass, trigger: 'blur'}]
@@ -93,3 +94,16 @@ export default {
     }
 }
 </script>
+<style scoped>
+.register {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-form {
+    width: 600px;
+}
+
+</style>
