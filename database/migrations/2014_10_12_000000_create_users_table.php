@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('role')->default(2)->conments("1: admin, 2: user");
+//            $table->tinyInteger('role')->default(2)->conments("1: admin, 2: user");
             $table->string('name');
             $table->string('email')->unique();
             $table->string('google_id')->nullable();
