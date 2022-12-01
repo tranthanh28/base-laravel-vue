@@ -31,6 +31,13 @@ class GoogleController extends Controller
         try {
             $user = Socialite::driver('google')->stateless()->user();
 
+            if(!str_contains($user->email, '@manhinhcong')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Only accept email: @manhinhcong"
+                ]);
+            }
+
             $finduser = User::where('google_id', $user->id)->first();
 
             if ($finduser) {
@@ -46,7 +53,6 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
                 $token = $newUser->createToken("API TOKEN")->plainTextToken;
-
             }
 
             return view('callback', [
