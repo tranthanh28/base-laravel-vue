@@ -43,7 +43,7 @@ class StoreWeb extends Command
     public function handle()
     {
         try {
-            $dataFile = file_get_contents(resource_path('data/data.json'));
+            $dataFile = file_get_contents(resource_path('data/data10k.json'));
             $dataFile = json_decode($dataFile, true);
             foreach ($dataFile['hits']['hits'] as $item) {
                 $data = [

@@ -20,6 +20,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/authenticated', function () {
         return true;
     });
+
+    Route::post('checkUrl', 'IfollowController@checkUrl');
 });
 
 Route::post('register', 'RegisterController@register');

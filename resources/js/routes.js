@@ -7,6 +7,7 @@ import NotFound from './view/NotFound';
 import Settings from './view/settings/index';
 import Profile from './view/settings/Profile';
 import Password from './view/settings/Password';
+import Ifollow from './view/admin/Ifollow';
 
 
 export default {
@@ -90,7 +91,16 @@ export default {
                     },
                 }
             ]
-        }
+        },
+        {
+            path: "/admin/ifollow",
+            name: "admin.ifollow",
+            component: Ifollow,
+            meta: {
+                requiresAuth: true,
+                layout: 'AuthLayout',
+            },
+        },
 
     ]
 }

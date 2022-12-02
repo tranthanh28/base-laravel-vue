@@ -14,7 +14,7 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-console.log('vao bootstrap')
+
 axios.interceptors.request.use(function (config) {
     config.headers.common =
         {
