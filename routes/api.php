@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return true;
     });
 
-    Route::post('checkUrl', 'IfollowController@checkUrl');
+    Route::post('check-url', 'IfollowController@checkUrl');
 });
 
 Route::post('register', 'RegisterController@register');

@@ -51,13 +51,16 @@ export default {
         update() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
+                    this.startLoading()
                     axios.put('/api/settings/password', this.form).then((response) => {
+                        this.stopLoading()
                         this.$notify({
                             title: 'Success',
                             message: 'update password successfully',
                             type: 'success'
                         });
                     }).catch((error) => {
+                        this.stopLoading()
                         this.$notify.error({
                             title: 'Error',
                             message: 'update password failed'

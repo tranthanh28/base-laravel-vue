@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\UserRepositoryInterface;
 use App\Http\Requests\CheckUrlRequest;
@@ -28,26 +29,10 @@ class IfollowController extends Controller
         $this->elasticsearch = ClientBuilder::create()->build();
     }
 
-
     public function checkUrl(CheckUrlRequest $request): JsonResponse
     {
-        // trick xuat=>
-        // 1. http://www.
-        // 2. https://www.
-        // 3. http://
-        // 4. https://
-        // trick xuat duoc domain => if(contains: www): )(.)*?/.
-
-        // url => xoa http://www., ................
-        // data[] = http://www . $url
-        // data[] = https://www
-        // data[] = http
-        // data[] = https
-//foreach data
         try {
-
             preg_match('/:\/\/(www\.)?(.*?)\//', $request->url, $matches, PREG_OFFSET_CAPTURE);
-            \Log::info($matches);
 
             if (!$matches && !$matches[2]) {
                 return response()->json([
@@ -55,22 +40,44 @@ class IfollowController extends Controller
                     "message" => "domain not found",
                 ]);
             }
-            $domainUrl = $matches[2][0];
+            $domain = $matches[2][0];
 
-            $search = array('http://www.', 'https://www.', 'http://', 'https://');
-            $urlReplace = str_replace($search, '', $request->url);
+            // Lấy số lượng tin từ website đã lấy về hệ thống, và số lượng cảnh báo.
+            $search = [
+                'index' => 'website',
+                'type' => 'filtered',
+                'body' => [
+                    "size" => 0,
+                    "query" => [
+                        "match" => [
+                            "web_page_name" => $domain
+                        ]
+                    ],
+                    "aggs" => [
+                        "domain_alerted" => [
+                            "filter" => ["term" => ["web_status_3" => "1"]],
+//                            ["web_id" => "http://www. http:// https:// https://www."]
+                        ]
+                    ]
+                ]
+            ];
+            $infoDomain = $this->elasticsearch->search($search);
+
+            $hasWebsite = DB::connection('mysql2')->select("Select * from websites where website = ?", [$domain]);
+
+            $hasGoogleApi = DB::connection('mysql2')->select("Select * from google_api where website = ?", [$domain]);
+
+            $listHttp = array('http://www.', 'https://www.', 'http://', 'https://');
+            $urlReplace = str_replace($listHttp, '', $request->url);
             $listUrl = [];
             $listUrl[] = "http://" . $urlReplace;
             $listUrl[] = "https://" . $urlReplace;
             $listUrl[] = "http://www." . $urlReplace;
             $listUrl[] = "https://www." . $urlReplace;
-            \Log::info("list url");
-            \Log::info($listUrl);
             foreach ($listUrl as $item) {
-                \Log::info($item);
-                $url = $item . "_" . $domainUrl;
+                $url = $item . "_" . $domain;
                 $web_id = md5($url);
-                $data = [
+                $search = [
                     'index' => 'website',
                     'type' => 'filtered',
                     'body' => [
@@ -81,14 +88,17 @@ class IfollowController extends Controller
                         ]
                     ]
                 ];
-                \Log::info($data);
-                $result = $this->elasticsearch->search($data);
-                \Log::info($result);
+                $result = $this->elasticsearch->search($search);
                 if ($result['hits']['total'] > 0) {
 
                     return response()->json(
                         [
                             'status' => "true",
+                            'infoDomain' => $infoDomain,
+                            "hasWebsite" => !collect($hasWebsite)->isEmpty(),
+                            "hasGoogleApi" => !collect($hasGoogleApi)->isEmpty(),
+                            'domain' => $domain,
+                            'url' => $item,
                             "data" => $result
                         ]
                     );
@@ -98,7 +108,7 @@ class IfollowController extends Controller
             return response()->json(
                 [
                     'status' => "false",
-                    "data" => "link {$request->url} chưa được hệ thống quét!"
+                    "data" => "link {$request->url} chưa có trên hệ thống!"
                 ], 404);
 
         } catch (\Exception $e) {

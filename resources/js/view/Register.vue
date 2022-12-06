@@ -69,7 +69,9 @@ export default {
         saveForm() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
+                    this.startLoading()
                     axios.post('/api/register', this.form).then((response) => {
+                        this.stopLoading()
                         this.$notify({
                             title: 'Success',
                             message: 'register successfully',
@@ -78,6 +80,7 @@ export default {
                         localStorage.setItem('token', response.data.token);
                         this.$router.push({name: "Dashboard"});
                     }).catch((error) => {
+                        this.stopLoading()
                         this.$notify.error({
                             title: 'Error',
                             message: 'register failed'

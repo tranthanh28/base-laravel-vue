@@ -15,6 +15,7 @@ import routes from './routes';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
+import mixin from './mixins/mixin';
 
 /* import the fontawesome core */
 import {library} from '@fortawesome/fontawesome-svg-core'
@@ -30,6 +31,8 @@ library.add(fas)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.mixin(mixin);
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);

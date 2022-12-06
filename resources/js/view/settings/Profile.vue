@@ -33,7 +33,9 @@ export default {
     },
     methods: {
         async update() {
+            this.startLoading()
             axios.put('/api/settings/profile', this.data).then((response) => {
+                this.stopLoading()
                 this.$notify({
                     title: 'Success',
                     message: 'update user successfully',
@@ -41,6 +43,7 @@ export default {
                 });
                 this.$store.dispatch('auth/updateUser', {user: this.data})
             }).catch((error) => {
+                this.stopLoading()
                 this.errors = error.response.data.errors;
             })
         }

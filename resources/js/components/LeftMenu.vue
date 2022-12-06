@@ -1,34 +1,37 @@
 <template>
     <div>
 
-            <el-menu
-                class="el-menu-vertical-demo"
-                background-color="#545c64"
-                text-color="#fff"
-                :collapse="collapse"
-                @select="menuSelected"
-                active-text-color="#ffd04b"
-            >
-                <h2>Monitaz</h2>
-                <div v-for="(item, index) in menuList" :key="index">
-                    <el-submenu v-if="item.child && item.child.length > 0" :index="item.route">
-                        <template slot="title">
-                            <i :class="item.icon"></i>
-                            <span>{{ item.title }}</span>
-                        </template>
-                        <el-menu-item v-for="childItem in item.child" :key="childItem.title" :index="childItem.route">
-                            <span>{{ childItem.title }}</span>
-                        </el-menu-item>
-                    </el-submenu>
-                    <el-menu-item v-else :index="item.route">
+        <el-menu
+            class="el-menu-vertical-demo"
+            background-color="#545c64"
+            text-color="#fff"
+            :collapse="collapse"
+            @select="menuSelected"
+            active-text-color="#ffd04b"
+        >
+            <div class="d-flex justify-content-center">
+                <h2 v-if="!collapse">Monitaz</h2>
+                <img v-else src="/image/logo-thumb3.png" alt="Monitaz" style="width:28px; height: auto; margin: 5px auto 0px;">
+            </div>
+            <div v-for="(item, index) in menuList" :key="index">
+                <el-submenu v-if="item.child && item.child.length > 0" :index="item.route">
+                    <template slot="title">
                         <i :class="item.icon"></i>
-                        <span>{{
-                                item.title
-                            }}</span>
-
+                        <span>{{ item.title }}</span>
+                    </template>
+                    <el-menu-item v-for="childItem in item.child" :key="childItem.title" :index="childItem.route">
+                        <span>{{ childItem.title }}</span>
                     </el-menu-item>
-                </div>
-            </el-menu>
+                </el-submenu>
+                <el-menu-item v-else :index="item.route">
+                    <i :class="item.icon"></i>
+                    <span>{{
+                            item.title
+                        }}</span>
+
+                </el-menu-item>
+            </div>
+        </el-menu>
     </div>
     <!--  <aside-->
     <!--    class="overflow-auto w-fix-280 flex-shrink-0 flex-grow-0 position-relative border-right left-menu"-->
@@ -129,15 +132,17 @@ export default {
     width: 200px;
     min-height: 400px;
 }
+
 .el-menu--collapse .el-menu-item [class^=el-icon-],
-.el-menu--collapse .el-submenu>.el-submenu__title [class^=el-icon-] {
+.el-menu--collapse .el-submenu > .el-submenu__title [class^=el-icon-] {
     margin: 0;
     vertical-align: middle;
     width: 24px;
     text-align: center;
 }
+
 .el-menu--collapse .el-menu-item span,
-.el-menu--collapse .el-submenu>.el-submenu__title span {
+.el-menu--collapse .el-submenu > .el-submenu__title span {
     height: 0;
     width: 0;
     overflow: hidden;

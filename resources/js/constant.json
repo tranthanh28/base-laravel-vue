@@ -2,6 +2,19 @@
     "leftMenu": {
         "default": [
             {
+                "route": "/admin",
+                "title": "admin",
+                "child": [
+                    {
+                        "route": "/admin/ifollow",
+                        "title": "Kiểm tra url",
+                        "index": "1-1"
+                    }
+                ],
+                "icon": "el-icon-link",
+                "index": "1"
+            },
+            {
                 "route": "#",
                 "title": "Quản lý URL",
                 "child": [

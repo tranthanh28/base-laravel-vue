@@ -50,7 +50,6 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted')
         window.addEventListener('message', this.onMessage, false)
     },
 
@@ -61,10 +60,13 @@ export default {
         loginUser() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
+                    this.startLoading()
                     axios.post('/api/login', this.form).then((response) => {
+                        this.stopLoading()
                         localStorage.setItem('token', response.data.token);
                         this.$router.push({name: "Dashboard"});
                     }).catch((error) => {
+                        this.stopLoading()
                         this.$notify.error({
                             title: 'Error',
                             message: 'login failed'

@@ -23,6 +23,7 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 //    ]);
 //});
 
-Route::get('/{any}', function () {
+
+Route::get('/{any}/', function () {
     return view('welcome');
-})->where('any', '.*');
+})->where('any', '^(?!api\/admin).*$');

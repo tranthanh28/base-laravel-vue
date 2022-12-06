@@ -1,5 +1,6 @@
 <template>
-    <el-header style="height: 70px; background-color: #f3f3f3" class="d-flex align-items-center justify-content-between">
+    <el-header style="height: 70px; background-color: #f3f3f3"
+               class="d-flex align-items-center justify-content-between">
         <div style="width: 200px" class="d-flex align-items-center">
             <i @click="collapseMenu" class="el-icon-menu" style="margin-right: 10px; font-size: x-large"></i>
             <el-input
@@ -16,20 +17,20 @@
             </el-badge>
 
             <el-dropdown trigger="click">
-                        <div class="el-dropdown-link d-flex align-items-center">
-                            <el-avatar icon="el-icon-user-solid"></el-avatar>
-                            <i class="el-icon-arrow-down el-icon--right"></i>
-                        </div>
+                <div class="el-dropdown-link d-flex align-items-center">
+                    <el-avatar icon="el-icon-user-solid"></el-avatar>
+                    <i class="el-icon-arrow-down el-icon--right"></i>
+                </div>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item icon="el-icon-user-solid">Thông tin</el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-s-tools">
-                        <router-link to="/settings" exact>Cài đặt</router-link>
+                    <el-dropdown-item icon="el-icon-user-solid" @click.native = "toProfile">Thông tin</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-s-tools" @click.native = "setting">
+                        Cài đặt
                     </el-dropdown-item>
-                    <el-dropdown-item @click="logout">
+                    <el-dropdown-item @click.native="logout">
                         <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket"/>
-                        Đăng xuât
+                        Đăng xuất
                     </el-dropdown-item>
-                    <el-dropdown-item icon="el-icon-user-solid">Đổi mật khẩu</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-user-solid" @click.native="toChangePass">Đổi mật khẩu</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -53,6 +54,15 @@ export default {
         collapse: 'common/collapse'
     }),
     methods: {
+        setting() {
+            this.$router.push("/settings")
+        },
+        toChangePass() {
+            this.$router.push({name: "settings.password"})
+        },
+        toProfile () {
+            this.$router.push({name: "settings.profile"})
+        },
         logout() {
             axios.post('/api/logout').then(() => {
                 localStorage.removeItem('token')
