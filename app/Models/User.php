@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
+        'status'
     ];
 
     /**
@@ -35,6 +36,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = array('is_role_admin');
+
     /**
      * The attributes that should be cast.
      *
@@ -43,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getIsRoleAdminAttribute()
+    {
+        return $this->hasRole('admin');
+    }
 }

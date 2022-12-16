@@ -1,20 +1,20 @@
 <template>
-    <el-card class="box-card">
-        <div slot="header">
-            <span>Profile</span>
-        </div>
-        <el-form ref="form" :model="data" label-width="180px">
-            <el-form-item label="Name">
-                <el-input v-model="data.name"></el-input>
-            </el-form-item>
-            <el-form-item label="Your e-mail">
-                <el-input v-model="data.email"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="update">Update</el-button>
-            </el-form-item>
-        </el-form>
-    </el-card>
+        <el-card class="box-card">
+            <div slot="header">
+                <span>Profile</span>
+            </div>
+            <el-form ref="form" :model="data" label-width="180px">
+                <el-form-item label="Name">
+                    <el-input v-model="data.name"></el-input>
+                </el-form-item>
+                <el-form-item label="Your e-mail">
+                    <el-input v-model="data.email"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="update">Update</el-button>
+                </el-form-item>
+            </el-form>
+        </el-card>
 </template>
 
 <script>

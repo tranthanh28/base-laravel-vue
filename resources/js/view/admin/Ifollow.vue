@@ -1,89 +1,101 @@
 <template>
-    <div>
-        <div class="d-flex justify-content-center">
-            <el-input
-                placeholder="url"
-                prefix-icon="el-icon-search"
-                v-model="url"
-                style="width:500px"
-            >
-            </el-input>
-            <el-button class="button-search" type="primary" round @click="checkUrl">Search</el-button>
-        </div>
-        <div v-if="data">
-            <el-alert
-                type="success"
-                show-icon>
-                Link {{ urlSuccess }} đã về hệ thống!
-            </el-alert>
-            <el-card class="box-card">
-                <div slot="header" class="clearfix">
+    <div class="swap-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title-box d-flex justify-content-between">
+                    <h4 class="page-title">Kiểm tra link trên hệ thống</h4>
+                    <el-breadcrumb>
+                        <el-breadcrumb-item :to="{ path: '/dashboard' }">Dashboard</el-breadcrumb-item>
+                        <el-breadcrumb-item>Check Url</el-breadcrumb-item>
+                    </el-breadcrumb>
                 </div>
-                <div>
-                    Website: {{ domain }}
-                </div>
-                <div>
-                    Số lượng tin từ website này đã lấy về hệ thống: {{ infoDomain.hits.total }}
-                </div>
-                <div>
-                    Số lượng alert từ website này: {{ infoDomain.aggregations.domain_alerted.doc_count }}
-                </div>
-                <div>
-                    Đã có trong danh sách trực tiếp: {{ hasWebsite ? "Có" : "Không" }}
-                </div>
-                <div>
-                    Đã có trong danh sách google api: {{ hasGoogleApi ? "Có" : "Không" }}
-                </div>
-            </el-card>
-            <el-card v-for="(item, index) in data" class="box-card" :key="item.id">
-                <div slot="header" class="clearfix">
-                </div>
-                <div>
-                    ID ES: {{ item._id }}
-                </div>
-                <div>
-                    Brand Id: {{ item._source.web_brand_id }}
-                </div>
-                <div>
-                    Object Id: {{ item._source.web_object_id }}
-                </div>
-                <div>
-                    Web key work: {{ item._source.web_keyword }}
-                </div>
-                <div>
-                    Parent object id: {{ item._source.web_parent_object_id }}
-                </div>
-                <div>
-                    Thời gian tạo: {{ item._source.web_created | moment }}
-                </div>
-                <div>
-                    Thời gian sửa: {{ item._source.web_content_updated }}
-                </div>
-                <div>
-                    Cảnh báo: {{ getAlert(item._source.web_status_3) }}
-                </div>
-                <div>
-                    Trạng thái: {{ getStatus(item._source.web_state) }}
-                </div>
-
-            </el-card>
-        </div>
-        <el-card v-else-if="message" class="box-card">
-            <div slot="header" class="clearfix">
-                <span>Thông báo</span>
             </div>
-            <div>
-                <el-alert
-                    :title="message"
-                    type="error"
-                    show-icon
+        </div>
+        <div>
+            <div class="d-flex justify-content-center">
+                <el-input
+                    placeholder="url"
+                    prefix-icon="el-icon-search"
+                    v-model="url"
+                    style="width:500px"
                 >
-                </el-alert>
+                </el-input>
+                <el-button class="button-search" type="primary" round @click="checkUrl">Search</el-button>
             </div>
-        </el-card>
+            <div v-if="data">
+                <el-alert
+                    type="success"
+                    show-icon>
+                    Link {{ urlSuccess }} đã về hệ thống!
+                </el-alert>
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                    </div>
+                    <div>
+                        Website: {{ domain }}
+                    </div>
+                    <div>
+                        Số lượng tin từ website này đã lấy về hệ thống: {{ infoDomain.hits.total }}
+                    </div>
+                    <div>
+                        Số lượng alert từ website này: {{ infoDomain.aggregations.domain_alerted.doc_count }}
+                    </div>
+                    <div>
+                        Đã có trong danh sách trực tiếp: {{ hasWebsite ? "Có" : "Không" }}
+                    </div>
+                    <div>
+                        Đã có trong danh sách google api: {{ hasGoogleApi ? "Có" : "Không" }}
+                    </div>
+                </el-card>
+                <el-card v-for="(item, index) in data" class="box-card" :key="item.id">
+                    <div slot="header" class="clearfix">
+                    </div>
+                    <div>
+                        ID ES: {{ item._id }}
+                    </div>
+                    <div>
+                        Brand Id: {{ item._source.web_brand_id }}
+                    </div>
+                    <div>
+                        Object Id: {{ item._source.web_object_id }}
+                    </div>
+                    <div>
+                        Web key work: {{ item._source.web_keyword }}
+                    </div>
+                    <div>
+                        Parent object id: {{ item._source.web_parent_object_id }}
+                    </div>
+                    <div>
+                        Thời gian tạo: {{ item._source.web_created | moment }}
+                    </div>
+                    <div>
+                        Thời gian sửa: {{ item._source.web_content_updated }}
+                    </div>
+                    <div>
+                        Cảnh báo: {{ getAlert(item._source.web_status_3) }}
+                    </div>
+                    <div>
+                        Trạng thái: {{ getStatus(item._source.web_state) }}
+                    </div>
 
+                </el-card>
+            </div>
+            <el-card v-else-if="message" class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>Thông báo</span>
+                </div>
+                <div>
+                    <el-alert
+                        :title="message"
+                        type="error"
+                        show-icon
+                    >
+                    </el-alert>
+                </div>
+            </el-card>
+
+        </div>
     </div>
-
 </template>
 <script>
 import moment from 'moment';
@@ -164,13 +176,13 @@ export default {
 }
 </script>
 <style scoped>
-.button-search {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 .box-card {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.button-search {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 </style>

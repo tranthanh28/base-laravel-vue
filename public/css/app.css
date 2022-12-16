@@ -10821,3 +10821,61 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.page-title-box {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  margin: 0 -16px 20px;
+}
+
+.col-xs-12 {
+  width: 100%;
+}
+
+.swap-content {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+}
+
+.page-title {
+  font-size: 20px;
+  margin-bottom: 0;
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  color: #505458;
+  margin: 10px 0;
+}
+
+.waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 1;
+  will-change: opacity, transform;
+  transition: all 0.3s ease-out;
+}
+
+.button-menu-mobile {
+  background: 0 0;
+  border: none;
+  color: #313a46;
+  padding: 0 20px;
+  display: inline-block;
+}
+
+.button-menu-mobile:hover {
+  color: #7fc1fc !important;
+}

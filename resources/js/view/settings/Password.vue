@@ -1,20 +1,20 @@
 <template>
-    <el-card class="box-card">
-        <div slot="header">
-            <span>Profile</span>
-        </div>
-        <el-form ref="form" :model="form" :rules="rules" label-width="180px">
-            <el-form-item prop="password" label="Password">
-                <el-input type="password" v-model="form.password"></el-input>
-            </el-form-item>
-            <el-form-item prop="password_confirmation" label="Confirm password">
-                <el-input type="password" v-model="form.password_confirmation"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="update">Update</el-button>
-            </el-form-item>
-        </el-form>
-    </el-card>
+        <el-card class="box-card">
+            <div slot="header">
+                <span>Profile</span>
+            </div>
+            <el-form ref="form" :model="form" :rules="rules" label-width="180px">
+                <el-form-item prop="password" label="Password">
+                    <el-input type="password" v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item prop="password_confirmation" label="Confirm password">
+                    <el-input type="password" v-model="form.password_confirmation"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="update">Update</el-button>
+                </el-form-item>
+            </el-form>
+        </el-card>
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
             rules: {
                 password: [
                     {required: true, message: 'Please input password', trigger: 'blur'},
-                    { min: 6, max: 20, message: 'Length should be 6 to 20', trigger: 'blur' }
+                    {min: 6, max: 20, message: 'Length should be 6 to 20', trigger: 'blur'}
                 ],
                 password_confirmation: [
                     {validator: validatePass, trigger: 'blur'}]

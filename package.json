@@ -29,9 +29,12 @@
         "@fortawesome/free-solid-svg-icons": "^6.2.0",
         "@fortawesome/vue-fontawesome": "^2.0.8",
         "element-ui": "^2.15.10",
+        "mdi-vue": "^3.0.13",
         "moment": "^2.29.4",
         "momentjs": "^2.0.0",
         "vue-router": "^3.3.4",
+        "vue-slimscroll": "^1.0.1",
+        "vue-waves-effect": "^1.0.0",
         "vuex": "^3.6.2",
         "vuex-persistedstate": "^4.1.0"
     }

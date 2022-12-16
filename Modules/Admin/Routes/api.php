@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+//use Modules\Admin\Http\Controllers\RoleController;
+//use Modules\Admin\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->prefix("/admin")->group(function () {
     Route::post('check-url', 'IfollowController@checkUrl');
+    Route::resource('roles', RoleController::class)->only(['index', 'update']);
+    Route::resource('users', UserController::class)->only(['index', 'update', 'store', 'destroy']);
 });

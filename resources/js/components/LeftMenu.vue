@@ -1,18 +1,15 @@
 <template>
     <div>
-
+<!--        v-slimscroll="options"-->
         <el-menu
-            class="el-menu-vertical-demo"
-            background-color="#545c64"
-            text-color="#fff"
+            class="el-menu-vertical-demo side-menu"
+            background-color="#36404e"
+            text-color="#98a6ad"
             :collapse="collapse"
             @select="menuSelected"
-            active-text-color="#ffd04b"
+            active-text-color="#7fc1fc"
+            :collapse-transition="false"
         >
-            <div class="d-flex justify-content-center">
-                <h2 v-if="!collapse">Monitaz</h2>
-                <img v-else src="/image/logo-thumb3.png" alt="Monitaz" style="width:28px; height: auto; margin: 5px auto 0px;">
-            </div>
             <div v-for="(item, index) in menuList" :key="index">
                 <el-submenu v-if="item.child && item.child.length > 0" :index="item.route">
                     <template slot="title">
@@ -33,64 +30,6 @@
             </div>
         </el-menu>
     </div>
-    <!--  <aside-->
-    <!--    class="overflow-auto w-fix-280 flex-shrink-0 flex-grow-0 position-relative border-right left-menu"-->
-    <!--  >-->
-    <!--    <div class="container-fluid py-3">-->
-    <!--      <ul class="nav flex-column">-->
-    <!--        <li-->
-    <!--          v-for="(item, index) in menuList"-->
-    <!--          :key="index"-->
-    <!--          :class="item.lineBottom ? 'nav-item line-bottom' : 'nav-item'"-->
-    <!--        >-->
-    <!--          <span-->
-    <!--            v-if="item.route === '#'"-->
-    <!--            class="nav-link d-inline-block disabled"-->
-    <!--          >-->
-    <!--            item.title-->
-    <!--          </span>-->
-    <!--          <router-link-->
-    <!--            v-else-if="item.child.length === 0"-->
-    <!--            event=""-->
-    <!--            :to="{ name: item.route }"-->
-    <!--            class="nav-link d-inline-block"-->
-    <!--          >-->
-    <!--            item.title-->
-    <!--          </router-link>-->
-    <!--          <span-->
-    <!--            v-else-if="item.child.length > 0"-->
-    <!--            class="nav-link d-inline-block item-menu-parent"-->
-    <!--            @click="item.flagChild = !item.flagChild"-->
-    <!--          >-->
-    <!--            item.title-->
-    <!--            <i v-if="!item.flagChild" class="el-icon-caret-bottom"></i>-->
-    <!--            <i v-else class="el-icon-caret-top"></i>-->
-    <!--          </span>-->
-    <!--          <ul-->
-    <!--            v-if="item.child.length > 0 && item.flagChild"-->
-    <!--            class="nav flex-column ml-3"-->
-    <!--          >-->
-    <!--            <li v-for="(child, i) in item.child.length" :key="i" class="nav-item">-->
-    <!--              <span-->
-    <!--                v-if="child.route === '#'"-->
-    <!--                class="nav-link d-inline-block disabled"-->
-    <!--              >-->
-    <!--                child.title-->
-    <!--              </span>-->
-    <!--              <router-link-->
-    <!--                v-else-->
-    <!--                event=""-->
-    <!--                :to="{ name: child.route }"-->
-    <!--                class="nav-link d-inline-block"-->
-    <!--              >-->
-    <!--                child.title-->
-    <!--              </router-link>-->
-    <!--            </li>-->
-    <!--          </ul>-->
-    <!--        </li>-->
-    <!--      </ul>-->
-    <!--    </div>-->
-    <!--  </aside>-->
 </template>
 
 <script>
@@ -100,6 +39,13 @@ import {mapGetters} from 'vuex'
 export default {
     data() {
         return {
+            options: {
+                height: "auto",
+                position: "right",
+                size: "5px",
+                color: "#dcdcdc",
+                wheelStep: 5
+            },
             totalMsgUnread: '',
             role: '',
             activeName: 'first',
@@ -149,4 +95,32 @@ export default {
     visibility: hidden;
     display: inline-block;
 }
+</style>
+<style scoped>
+/*body.fixed-left .side-menu {*/
+/*    bottom: 50px;*/
+/*    margin-bottom: -70px;*/
+/*    margin-top: 0;*/
+/*    padding-bottom: 70px;*/
+/*    position: fixed;*/
+/*}*/
+
+.side-menu {
+    /*position: absolute;*/
+    z-index: 10;
+    height: 100vh;
+}
+
+/*.side-menu {*/
+/*    !*width: 225px;*!*/
+/*    padding-top: 10px;*/
+/*    z-index: 10;*/
+/*    !*background: #36404e;*!*/
+/*    bottom: 50px;*/
+/*    margin-top: 0;*/
+/*    padding-bottom: 70px;*/
+/*    !*position: fixed;*!*/
+/*    top: 0;*/
+/*    box-shadow: 0 0 24px 0 rgba(0,0,0,.06),0 1px 0 0 rgba(0,0,0,.02);*/
+/*}*/
 </style>

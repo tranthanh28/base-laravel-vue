@@ -1,10 +1,11 @@
 <template>
         <div class="bg-light d-flex flex-column page-container">
-            <div class="d-flex align-items-stretch flex-fill">
-                <LeftMenu />
-                <div class="w-100 d-flex flex-column position-relative">
-                    <NavbarAuth></NavbarAuth>
-                    <main>
+            <div>
+                <NavbarAuth></NavbarAuth>
+                <div class="d-flex swap">
+<!--                    class="d-flex flex-column position-relative"-->
+                    <LeftMenu />
+                    <main style="flex-grow: 2;">
                         <router-view></router-view>
                     </main>
                 </div>
@@ -23,3 +24,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.swap {
+    margin-top: 70px;
+}
+</style>

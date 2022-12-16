@@ -1,11 +1,8 @@
 <template>
     <div>
-        <div class="w-100 d-flex flex-column position-relative bg-white">
-            <Navbar></Navbar>
-            <main>
-                <router-view></router-view>
-            </main>
-        </div>
+        <main>
+            <router-view></router-view>
+        </main>
     </div>
 </template>
 <script>

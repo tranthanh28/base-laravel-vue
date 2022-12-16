@@ -8,6 +8,8 @@ import Settings from './view/settings/index';
 import Profile from './view/settings/Profile';
 import Password from './view/settings/Password';
 import Ifollow from './view/admin/Ifollow';
+import Roles from './view/manage/Roles';
+import Users from './view/manage/Users';
 
 
 export default {
@@ -41,7 +43,7 @@ export default {
             component: Register,
             meta: {
                 guest: true,
-                layout: 'DefaultLayout',
+                layout: '',
             },
             name: 'Register'
         },
@@ -50,7 +52,7 @@ export default {
             component: Login,
             meta: {
                 guest: true,
-                layout: 'DefaultLayout',
+                layout: '',
             },
             name: 'Login',
         },
@@ -93,9 +95,27 @@ export default {
             ]
         },
         {
-            path: "/admin/ifollow",
-            name: "admin.ifollow",
+            path: "/tools/ifollow",
+            name: "tools.ifollow",
             component: Ifollow,
+            meta: {
+                requiresAuth: true,
+                layout: 'AuthLayout',
+            },
+        },
+        {
+            path: "/manage/users",
+            name: "manage.users",
+            component: Users,
+            meta: {
+                requiresAuth: true,
+                layout: 'AuthLayout',
+            },
+        },
+        {
+            path: "/manage/roles",
+            name: "manage.roles",
+            component: Roles,
             meta: {
                 requiresAuth: true,
                 layout: 'AuthLayout',

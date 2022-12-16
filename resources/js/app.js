@@ -17,6 +17,16 @@ import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
 import mixin from './mixins/mixin';
 
+require('./plugins/mdivue');
+require('./plugins/slimscroll');
+
+//wavesEffect
+import Waves from 'vue-waves-effect';
+import 'vue-waves-effect/dist/vueWavesEffect.css';
+
+Vue.use(Waves);
+
+
 /* import the fontawesome core */
 import {library} from '@fortawesome/fontawesome-svg-core'
 
@@ -42,6 +52,7 @@ function loggedIn() {
     return localStorage.getItem('token')
 }
 
+// check middleware
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
