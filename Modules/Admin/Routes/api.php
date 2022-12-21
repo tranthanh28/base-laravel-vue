@@ -16,8 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->prefix("/admin")->group(function () {
+Route::middleware(['auth:sanctum', 'active'])->prefix("/admin")->group(function () {
     Route::post('check-url', 'IfollowController@checkUrl');
-    Route::resource('roles', RoleController::class)->only(['index', 'update']);
-    Route::resource('users', UserController::class)->only(['index', 'update', 'store', 'destroy']);
+    Route::resource('roles', RoleController::class)->only(['index', 'update', 'store', 'destroy']);
+    Route::resource('users', UserController::class)->only(['index', 'update']);
+//    DB::listen(function ($query) {
+//         \Log::info($query->sql);
+        // $query->bindings;
+        // $query->time;
+//    });
 });

@@ -1,6 +1,6 @@
 <template>
     <div class="text-2xl text-gray-800">
-        Home page / test
+        Home page
     </div>
 </template>
 <script>

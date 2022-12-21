@@ -28,6 +28,10 @@ class UserController extends Controller
         UserRepositoryInterface $userRepository
     )
     {
+        //permission
+        $this->middleware('permission:list-user|update-user', ['only' => ['index']]);
+        $this->middleware('permission:update-user', ['only' => ['update']]);
+
         $this->userRepository = $userRepository;
         $this->elasticsearch = ClientBuilder::create()->build();
     }
@@ -62,6 +66,5 @@ class UserController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-
     }
 }

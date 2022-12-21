@@ -87,7 +87,7 @@
 import AuthMixin from "../mixins/auth-mixin"
 
 export default {
-    mixins: [ AuthMixin ],
+    mixins: [AuthMixin],
     data() {
         return {
             token: localStorage.getItem('token'),
@@ -132,7 +132,7 @@ export default {
                     axios.post('/api/login', this.form).then((response) => {
                         this.stopLoading()
                         localStorage.setItem('token', response.data.token);
-                        this.$router.push({name: "Dashboard"});
+                        this.getUser()
                     }).catch((error) => {
                         this.stopLoading()
                         this.$notify.error({
@@ -162,7 +162,7 @@ export default {
                 return
             }
             localStorage.setItem('token', e.data.token)
-            this.$router.push('/dashboard')
+            this.getUser()
         }
     }
 }

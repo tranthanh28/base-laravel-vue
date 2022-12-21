@@ -10,7 +10,7 @@ import Password from './view/settings/Password';
 import Ifollow from './view/admin/Ifollow';
 import Roles from './view/manage/Roles';
 import Users from './view/manage/Users';
-
+import Forbidden from './view/error/403';
 
 export default {
     mode: 'history',
@@ -28,15 +28,6 @@ export default {
                 requiresAuth: true,
                 layout: 'AuthLayout',
             }
-        },
-        {
-            path: '/about',
-            component: About,
-            meta: {
-                guest: true,
-                layout: 'DefaultLayout',
-            },
-            name: 'About',
         },
         {
             path: '/register',
@@ -99,6 +90,7 @@ export default {
             name: "tools.ifollow",
             component: Ifollow,
             meta: {
+                permission: 'check-url',
                 requiresAuth: true,
                 layout: 'AuthLayout',
             },
@@ -110,6 +102,7 @@ export default {
             meta: {
                 requiresAuth: true,
                 layout: 'AuthLayout',
+                role: 'admin'
             },
         },
         {
@@ -119,8 +112,13 @@ export default {
             meta: {
                 requiresAuth: true,
                 layout: 'AuthLayout',
+                role: 'admin'
             },
         },
-
+        {
+            path: "/error/forbidden",
+            name: "error.forbidden",
+            component: Forbidden,
+        },
     ]
 }

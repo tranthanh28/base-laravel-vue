@@ -4,60 +4,105 @@ namespace Modules\Admin\Http\Controllers;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use App\Repositories\UserRepositoryInterface;
-use Modules\Admin\Http\Requests\CheckUrlRequest;
-use Elasticsearch\ClientBuilder;
 use App\Http\Controllers\Controller;
+use Modules\Admin\Http\Requests\UpdateRoleRequest;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    /**
-     * @var UserRepositoryInterface
-     */
-    protected $userRepository;
-    protected $elasticsearch;
-
-    public function __construct(
-        UserRepositoryInterface $userRepository
-    )
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
-        $this->elasticsearch = ClientBuilder::create()->build();
+        $this->middleware('permission:list-role|create-role|edit-role|delete-role', ['only' => ['index']]);
+        $this->middleware('permission:create-role', ['only' => ['store']]);
+        $this->middleware('permission:update-role', ['only' => ['update']]);
+        $this->middleware('permission:delete-role', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'DESC')->paginate(10);
+        $data = Role::with('permissions', 'users')->get();
+        $allUsers = User::all();
+        $permissions = Permission::all();
         return response()->json([
             'status' => 'success',
-            'data' => $data
+            'data' => [
+                'roles' => $data,
+                'users' => $allUsers,
+                'permissions' => $permissions
+            ]
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request, $id)
     {
-        $this->validate($request, [
-            'user_id' => 'string',
-            'status' => 'string',
-        ]);
-        $input = $request->all();
-        if (!empty($input['password'])) {
-            $input['password'] = Hash::make($input['password']);
-        } else {
-            $input = Arr::except($input, array('password'));
+        try {
+            DB::beginTransaction();
+            $data = $request->validated();
+            $role = Role::find($id);
+            $role->name = $request->input('name');
+            $role->save();
+
+            $role->syncPermissions($data['permissions']);
+            $role->users()->sync($data['users']);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'update role successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'false',
+                'message' => $e->getMessage(),
+            ], 500);
         }
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id', $id)->delete();
-
-        $user->assignRole($request->input('roles'));
-
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
     }
+
+    public function store(UpdateRoleRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $request->validated();
+            $role = Role::create(['name' => $data['name']]);
+
+            $role->syncPermissions($data['permissions']);
+            $role->users()->sync($data['users']);
+
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'update role successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error($e->getMessage());
+            return response()->json([
+                'status' => 'false',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $role = Role::findOrFail($id);
+            $role->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'delete role successfully'
+            ]);
+        } catch (Exception $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
 }

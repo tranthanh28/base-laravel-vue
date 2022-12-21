@@ -141,9 +141,11 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import AuthMinxin from "../mixins/auth-mixin"
 
 export default {
     name: 'Navbar',
+    mixins: [AuthMinxin],
     data() {
         return {
             search: '',
@@ -164,15 +166,6 @@ export default {
         },
         toProfile() {
             this.$router.push("/dashboard")
-        },
-        logout() {
-            axios.post('/api/logout').then(() => {
-                localStorage.removeItem('token')
-                this.$store.dispatch('auth/logout')
-                this.$router.push('/login')
-            }).catch((errors) => {
-                console.log(errors)
-            })
         },
         collapseMenu() {
             this.$store.dispatch('common/toggleCollapse');

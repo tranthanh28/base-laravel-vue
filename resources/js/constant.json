@@ -10,6 +10,7 @@
             {
                 "route": "/tools",
                 "title": "Tools",
+                "permission": "check-url",
                 "child": [
                     {
                         "route": "/tools/ifollow",
@@ -21,6 +22,7 @@
             {
                 "route": "/manage",
                 "title": "Quản lý",
+                "role": "admin",
                 "child": [
                     {
                         "route": "/manage/users",

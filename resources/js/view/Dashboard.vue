@@ -17,41 +17,22 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
     data() {
         return {
             options: {
                 height: '100%',
             },
-            user: null,
             token: localStorage.getItem('token')
         }
     },
-    methods: {
-        logout() {
-            axios.post('api/logout').then((response) => {
-                localStorage.removeItem('token')
-                this.$store.dispatch('auth/logout')
-                this.$router.push('/login')
-            }).catch((errors) => {
-                console.log(errors)
-            })
-        },
-        getUser() {
-            this.startLoading()
-            axios.get('api/user').then((response) => {
-                this.stopLoading()
-                this.user = response.data
-                this.$store.dispatch('auth/updateUser', {user: this.user})
-            }).catch((errors) => {
-                this.stopLoading()
-                this.$router.push('/login')
-                console.log(errors)
-            })
-        }
-    },
+    computed: mapGetters({
+        user: 'auth/user'
+    }),
+    methods: {},
     created() {
-        this.getUser()
     }
 
 }

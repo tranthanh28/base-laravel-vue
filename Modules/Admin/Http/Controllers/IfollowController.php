@@ -28,6 +28,9 @@ class IfollowController extends Controller
     {
         $this->userRepository = $userRepository;
         $this->elasticsearch = ClientBuilder::create()->build();
+
+        //permission
+        $this->middleware('permission:check-url', ['only' => ['checkUrl']]);
     }
 
     public function checkUrl(CheckUrlRequest $request): JsonResponse

@@ -13,7 +13,7 @@
         <div>
             <div>
                 <h2>Users list</h2>
-                <div>
+                <div v-if="data">
                     <el-tabs v-model="activeName" @tab-click="handleClickTab">
                         <el-tab-pane label="All" name="3"></el-tab-pane>
                         <el-tab-pane label="Active" name="1"></el-tab-pane>
@@ -94,10 +94,12 @@
 export default {
     data() {
         return {
+            //Pagination
             totalPages: 0,
             perPage: 10,
             currentPage: 1,
-            data: [],
+
+            data: '',
 
             //tab
             activeName: '3',
@@ -142,11 +144,15 @@ export default {
                 this.stopLoading()
                 this.currentUser.status = dataEdit.status
                 this.dialogFormVisible = false
-                console.log(response)
+                this.$notify({
+                    title: 'Success',
+                    message: 'update successfully',
+                    type: 'success'
+                });
             }).catch(error => {
                 this.stopLoading()
                 this.dialogFormVisible = false
-                console.log(error)
+                this.handleErrorNotPermission(error)
             })
         },
         handleCurrentChange(val) {
@@ -162,7 +168,7 @@ export default {
                 this.currentPage = response.data.data.current_page
             }).catch((errors) => {
                 this.stopLoading()
-                console.log(errors)
+                this.handleErrorNotPermission(errors)
             })
         },
     }

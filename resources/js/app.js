@@ -63,7 +63,27 @@ router.beforeEach((to, from, next) => {
                 query: {redirect: to.fullPath}
             })
         } else {
-            next()
+            let data = localStorage.getItem('vuex')
+            let user = JSON.parse(data)?.auth?.user
+            //lay dc permissions cua user=> luu vao localstorage.
+            //=> trong man left menu cung check lai permission
+            // => trong app js check xem khi vao trang co meta.permissions(ex: check_url)
+            // kiem tra permissions cua user: user.permissions == to.meta.permissions
+            // => neu dung thi hien thi
+            // con không đúng thì không hiển thị
+
+
+            if (user?.status === 0) {
+                next({
+                    path: '/error/403'
+                })
+            } else if ((to.meta.role == 'admin' && !user.is_role_admin) || (to.meta.permission && !user?.permissions.includes(to.meta.permission))) {
+                next({
+                    path: '/'
+                })
+            } else {
+                next()
+            }
         }
     }
         // else if (to.matched.some(record => record.meta.guest)) {

@@ -32,9 +32,11 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import AuthMinxin from "../mixins/auth-mixin"
 
 export default {
     name: 'Navbar',
+    mixins: [AuthMinxin],
     data() {
         return {
             defaultActive: "1",
@@ -45,15 +47,6 @@ export default {
         user: 'auth/user'
     }),
     methods: {
-        logout() {
-            axios.post('/api/logout').then(() => {
-                localStorage.removeItem('token')
-                this.$store.dispatch('auth/logout')
-                this.$router.push('/login')
-            }).catch((errors) => {
-                console.log(errors)
-            })
-        },
     }
 }
 </script>

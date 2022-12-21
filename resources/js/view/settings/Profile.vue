@@ -44,6 +44,10 @@ export default {
                 this.$store.dispatch('auth/updateUser', {user: this.data})
             }).catch((error) => {
                 this.stopLoading()
+                this.$notify.error({
+                    title: 'Error',
+                    message: 'update failed'
+                });
                 this.errors = error.response.data.errors;
             })
         }

@@ -139,13 +139,8 @@ export default {
                     this.startLoading()
                     axios.post('/api/register', this.form).then((response) => {
                         this.stopLoading()
-                        this.$notify({
-                            title: 'Success',
-                            message: 'register successfully',
-                            type: 'success'
-                        });
                         localStorage.setItem('token', response.data.token);
-                        this.$router.push({name: "Dashboard"});
+                        this.getUser()
                     }).catch((error) => {
                         this.stopLoading()
                         this.$notify.error({

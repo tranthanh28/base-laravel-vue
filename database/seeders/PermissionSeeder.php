@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         // Add admin role
         $adminRole = Role::where('name', config('roles.admin.roles'))->first();
         if (!$adminRole) {
-            $adminRole = Role::create(config('roles.admin.roles'));
+            $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'sanctum']);
         }
         // Get new admin permission
         $newPermissions = $this->getNewPermissions('roles.admin.permissions');
@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
         // Add client role
         $clientRole = Role::where('name', config('roles.client.roles'))->first();
         if (!$clientRole) {
-            $clientRole = Role::create(config('roles.client.roles'));
+            $clientRole = Role::create(['name' => 'client', 'guard_name' => 'sanctum']);
         }
         // Get new client permission
         $newPermissions = $this->getNewPermissions('roles.client.permissions');
@@ -50,7 +50,7 @@ class PermissionSeeder extends Seeder
             if (!in_array($configPermission, $currentPermissions)) {
                 $newPermissions[] = [
                     'name' => $configPermission,
-                    'guard_name' => 'web',// config guard for admin
+                    'guard_name' => 'sanctum',// config guard for admin
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

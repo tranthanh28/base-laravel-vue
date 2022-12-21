@@ -99,8 +99,11 @@
 </template>
 <script>
 import moment from 'moment';
+import {mapGetters} from 'vuex'
+import AuthMinxin from "../../mixins/auth-mixin";
 
 export default {
+    mixins: [AuthMinxin],
     data() {
         return {
             url: '',
@@ -159,6 +162,9 @@ export default {
                         this.message = errors.response.data.data
                     } else if (errors.response.status === 422) {
                         this.message = "Vui lòng nhập đúng đường link!"
+                    } else if (errors.response.status == 403) {
+                        this.logout()
+                        this.message = 'Bạn không có quyền thực hiện thao tác này. Liên hệ admin để có thêm thông tin!!!'
                     } else {
                         this.message = "Đã có lỗi xảy ra!"
                     }

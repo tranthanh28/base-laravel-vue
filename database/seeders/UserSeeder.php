@@ -30,7 +30,6 @@ class UserSeeder extends Seeder
             Role::create(config('roles.admin.roles'));
             // Assign role super admin to user
             $user->assignRole(config('roles.admin.roles'));
-            \Log::info('User'. $user);
         }
     }
 }

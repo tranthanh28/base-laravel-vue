@@ -1,32 +1,35 @@
 <template>
     <div>
-<!--        v-slimscroll="options"-->
+        <!--        v-slimscroll="options"-->
         <el-menu
             class="el-menu-vertical-demo side-menu"
             background-color="#36404e"
             text-color="#98a6ad"
+            :default-active="active"
             :collapse="collapse"
             @select="menuSelected"
             active-text-color="#7fc1fc"
             :collapse-transition="false"
         >
             <div v-for="(item, index) in menuList" :key="index">
-                <el-submenu v-if="item.child && item.child.length > 0" :index="item.route">
-                    <template slot="title">
+                <div v-if="checkDisplay(item)">
+                    <el-submenu v-if="item.child && item.child.length > 0" :index="item.route">
+                        <template slot="title">
+                            <i :class="item.icon"></i>
+                            <span>{{ item.title }}</span>
+                        </template>
+                        <el-menu-item v-for="childItem in item.child" :key="childItem.title" :index="childItem.route">
+                            <span>{{ childItem.title }}</span>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-menu-item v-else :index="item.route">
                         <i :class="item.icon"></i>
-                        <span>{{ item.title }}</span>
-                    </template>
-                    <el-menu-item v-for="childItem in item.child" :key="childItem.title" :index="childItem.route">
-                        <span>{{ childItem.title }}</span>
-                    </el-menu-item>
-                </el-submenu>
-                <el-menu-item v-else :index="item.route">
-                    <i :class="item.icon"></i>
-                    <span>{{
-                            item.title
-                        }}</span>
+                        <span>{{
+                                item.title
+                            }}</span>
 
-                </el-menu-item>
+                    </el-menu-item>
+                </div>
             </div>
         </el-menu>
     </div>
@@ -39,6 +42,7 @@ import {mapGetters} from 'vuex'
 export default {
     data() {
         return {
+            active: '',
             options: {
                 height: "auto",
                 position: "right",
@@ -59,13 +63,18 @@ export default {
     },
     computed: {
         ...mapGetters({
-            collapse: 'common/collapse'
-        })
+            collapse: 'common/collapse',
+            user: 'auth/user',
+        }),
     },
     created() {
         this.menuList = LeftMenu.leftMenu.default
+        this.active = this.$router.currentRoute.path
     },
     methods: {
+        checkDisplay(item) {
+            return (!item.role || (item.role === 'admin' && this.user.is_role_admin)) && (!item.permission || (this.user.permissions.includes(item.permission)))
+        },
         menuSelected(index) {
             this.$router.push(`${index}`);
         }

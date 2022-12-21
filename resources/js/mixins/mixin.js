@@ -1,12 +1,12 @@
 export default {
     data() {
         return {
-            loading: false,
+            loadingValue: false,
         }
     },
     methods: {
         startLoading() {
-            this.loading = this.$loading({
+            this.loadingValue = this.$loading({
                 lock: true,
                 text: 'Loading',
                 spinner: 'el-icon-loading',
@@ -14,7 +14,20 @@ export default {
             });
         },
         stopLoading() {
-            this.loading.close();
+            this.loadingValue.close();
         },
+        handleErrorNotPermission(error) {
+            if (error.response.status == 403) {
+                this.$notify.error({
+                    title: 'Unauthorized',
+                    message: 'Bạn không có quyền thực hiện thao tác này. Liên hệ admin để có thêm thông tin!!!'
+                });
+            } else {
+                this.$notify.error({
+                    title: 'Error',
+                    message: 'Error'
+                });
+            }
+        }
     }
 }
