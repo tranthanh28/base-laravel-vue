@@ -67,31 +67,21 @@
                     </el-pagination>
                 </div>
             </div>
-
-            <el-dialog title="Edit User" :visible.sync="dialogFormVisible">
-                <el-form :model="form">
-                    <el-form-item label="Name" :label-width="formLabelWidth">
-                        <el-input v-model="form.name" autocomplete="off" disabled></el-input>
-                    </el-form-item>
-                    <el-form-item label="Email" :label-width="formLabelWidth">
-                        <el-input v-model="form.email" autocomplete="off" disabled></el-input>
-                    </el-form-item>
-                    <el-form-item label="Active" :label-width="formLabelWidth">
-                        <el-switch v-model="form.status"></el-switch>
-                    </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer d-flex justify-content-center">
-                <el-button type="primary" @click="handleEditUser()"
-                           :disabled="statusClone===form.status">Submit</el-button>
-            </span>
-            </el-dialog>
-
+                        <el-dialog title="Edit User" :visible.sync="dialogFormVisible">
+                            <DialogUser :form="form" :status-clone="statusClone" @editUser="handleEditUser"></DialogUser>
+                        </el-dialog>
         </div>
 
     </div>
 </template>
 <script>
+import DialogUser from "../../components/management/DialogUser";
+
 export default {
+    name:'Users',
+    components: {
+        DialogUser,
+    },
     data() {
         return {
             //Pagination
