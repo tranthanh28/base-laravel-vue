@@ -11,6 +11,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function __construct(User $model)
     {
-        $this->model = $model;
+        $this->setModel($model);
     }
 }

@@ -13,6 +13,7 @@ window.Vue = require('vue').default;
 import VueRouter from 'vue-router';
 import routes from './routes';
 import ElementUI from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
 import mixin from './mixins/mixin';
@@ -101,7 +102,7 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale })
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

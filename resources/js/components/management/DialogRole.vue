@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-form :model="form">
-            <el-form-item label="Name" :label-width="formLabelWidth">
+        <el-form :model="form" :rules="rules" ref="ruleForm">
+            <el-form-item label="Name" :label-width="formLabelWidth" prop="name">
                 <el-input v-model="form.name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="Permissions" :label-width="formLabelWidth">
@@ -41,7 +41,7 @@ export default {
                     id: '',
                     name: '',
                     email: '',
-                    status: false
+                    status: false,
                 }
             }
         },
@@ -56,12 +56,24 @@ export default {
     },
     data() {
         return {
-            formLabelWidth: '120px'
+            formLabelWidth: '120px',
+            rules: {
+                name: [
+                    {required: true, message: 'Please input name', trigger: 'blur'},
+                ],
+            }
         }
     },
     methods: {
         submit() {
-            this.$emit('submit')
+            this.$refs['ruleForm'].validate((valid) => {
+                if (valid) {
+                    this.$emit('submit')
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     }
 

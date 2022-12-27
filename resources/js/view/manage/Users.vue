@@ -67,9 +67,9 @@
                     </el-pagination>
                 </div>
             </div>
-                        <el-dialog title="Edit User" :visible.sync="dialogFormVisible">
-                            <DialogUser :form="form" :status-clone="statusClone" @editUser="handleEditUser"></DialogUser>
-                        </el-dialog>
+            <el-dialog title="Edit User" :visible.sync="dialogFormVisible">
+                <DialogUser :form="form" :status-clone="statusClone" @editUser="handleEditUser"></DialogUser>
+            </el-dialog>
         </div>
 
     </div>
@@ -78,13 +78,14 @@
 import DialogUser from "../../components/management/DialogUser";
 
 export default {
-    name:'Users',
+    name: 'Users',
     components: {
         DialogUser,
     },
     data() {
         return {
             //Pagination
+            page: this.$route.query.page ?? 1,
             totalPages: 0,
             perPage: 10,
             currentPage: 1,
@@ -92,8 +93,8 @@ export default {
             data: '',
 
             //tab
-            activeName: '3',
-            currentTab: '3',
+            activeName: this.$route.query.status ?? '3',
+            currentTab: this.$route.query.status ?? '3',
 
             //dialog
             currentUser: {},
@@ -109,11 +110,12 @@ export default {
         }
     },
     created() {
-        this.getListUsers()
+        this.getListUsers(this.page, this.currentTab)
     },
     methods: {
         handleClickTab(tab) {
             this.currentTab = tab.name
+            this.$router.push({path: '/manage/users', query: {page: 1, status: this.currentTab}});
             this.getListUsers(1, this.currentTab)
         },
         handleEdit(row) {
@@ -146,6 +148,7 @@ export default {
             })
         },
         handleCurrentChange(val) {
+            this.$router.push({path: '/manage/users', query: {page: val, status: this.currentTab}});
             this.getListUsers(val, this.currentTab)
         },
         getListUsers(page = 1, status = 3) {
